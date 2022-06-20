@@ -12,45 +12,51 @@ class BucketController extends Controller
     }
 
     function bucketCalculation(Request $request){
-        $bucketA = $request->bucketA ;
-        $bucketB = $request->bucketB;
-        $bucketC = $request->bucketC;
-        $bucketD = $request->bucketD;
-        $bucketE = $request->bucketE;
 
         if($request->session()->has('empty_space')){
             $bucket_arr = session('empty_space');
         }
         else {
-            $bucket_arr = ['a'=>$bucketA, 'b'=>$bucketB, 'c' => $bucketC, 'd' => $bucketD, 'e' => $bucketE];    
+            $bucket_arr = [
+                'a' => $request->bucketA, 
+                'b' => $request->bucketB, 
+                'c' => $request->bucketC, 
+                'd' => $request->bucketD, 
+                'e' => $request->bucketE
+            ];    
         }
 
         arsort($bucket_arr);
-        $pink = $request->pink;
-        $red = $request->red;
-        $blue = $request->blue;
-        $orange = $request->orange;
-        $green = $request->green;
+
          if($request->session()->has('ball_vol_arr')){
             $ball_vol_arr = session('ball_vol_arr');
         }
         else {
-            $ball_vol_arr = ['pink'=> $pink, 'red' => $red, 'blue'=>$blue, 'orange'=>$orange, 'green'=>$green];
+            $ball_vol_arr = [
+                'pink' => $request->pink, 
+                'red' => $request->red, 
+                'blue' => $request->blue, 
+                'orange' => $request->orange, 
+                'green' => $request->green
+            ];
 
         }
 
-        $npink = $request->npink;
-        $nred = $request->nred;
-        $nblue = $request->nblue;
-        $norange = $request->norange;
-        $ngreen = $request->ngreen;
+
         if($request->session()->has('ball_arr')){
             $ball_arr = session('ball_arr');
         }
         else {
-            $ball_arr = ['pink'=> $npink, 'red' => $nred, 'blue'=>$nblue, 'orange'=>$norange, 'green'=>$ngreen];
+            $ball_arr = [
+                'pink'=> $request->npink, 
+                'red' => $request->nred, 
+                'blue'=>$request->nblue, 
+                'orange'=>$request->norange, 
+                'green'=>$request->ngreen
+            ];
         }
         arsort($ball_arr);
+
         $pending_balls = $ball_arr;
         $empty_space = $bucket_arr;
 
@@ -84,7 +90,9 @@ class BucketController extends Controller
         session(['empty_space' => $empty_space]);
         session(['ball_vol_arr' => $ball_vol_arr]);
         session(['ball_arr' => $ball_arr]);
+
         $output = [];
+        
         $filled_space = 0;
         foreach($bucket_ball_map as $name => $value) {
             foreach($value as $color => $count) {

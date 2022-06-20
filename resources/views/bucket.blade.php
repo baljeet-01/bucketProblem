@@ -144,7 +144,7 @@
 	  			{{$key}} : {{$value}} <br>
 	  		@endforeach
 
-	  		Minimum {{count($output)}} Buckets required <br>
+	  		Minimum {{count($output)}} Bucket(s) used to fill the balls <br>
 	  	@endif
 	  	@if(isset($filled_space) && $filled_space)
 	  		{{$filled_space}} cubic inches of bucket is used to put balls <br>
